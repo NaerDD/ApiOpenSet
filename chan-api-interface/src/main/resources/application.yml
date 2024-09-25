@@ -1,0 +1,27 @@
+server:
+  port: 8123
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: heartApi-interface
+  # DataSource Config
+  redis:
+    host: 106.227.14.70
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8  #最大连接
+        max-idle: 8   #最大空闲连接
+        min-idle: 0   #最小空闲连接
+        max-wait: 100ms #连接等待时间
+    database: 0
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sh-cynosdbmysql-grp-7l3kytem.sql.tencentcdb.com:25602/city
+    username: root
+    password: Admin123456
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

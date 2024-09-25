@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/chan-api-backend/sql/db.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/chan-api-backend/sql/ddl.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/chan-api-backend/src/main/resources/mapper/UserInterfaceInfoMapper.xml" dialect="GenericSQL" />
+  </component>
+</project>
