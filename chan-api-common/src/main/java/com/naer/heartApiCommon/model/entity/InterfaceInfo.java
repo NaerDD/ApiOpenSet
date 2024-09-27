@@ -37,7 +37,7 @@ public class InterfaceInfo implements Serializable {
     /**
      * 请求参数
      */
-    private String requestParams;
+//    private String requestParams;
 
     /**
      * 请求头
@@ -64,7 +64,7 @@ public class InterfaceInfo implements Serializable {
      */
     private Long userId;
 
-    private String uri;
+//    private String uri;
 
     /**
      * 创建时间
@@ -80,7 +80,7 @@ public class InterfaceInfo implements Serializable {
      * 是否删除(0-未删, 1-已删)
      */
     @TableLogic
-    private Integer idDelete;
+    private Integer isDelete;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

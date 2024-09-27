@@ -29,7 +29,7 @@ public class InnerInterfaceInfoServiceImpl implements InnerInterfaceInfoService 
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         LambdaQueryWrapper<InterfaceInfo> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(InterfaceInfo::getUri,url)
+        lqw.eq(InterfaceInfo::getUrl,url)
                 .eq(InterfaceInfo::getMethod,method);
         InterfaceInfo interfaceInfo = interfaceInfoMapper.selectOne(lqw);
         return interfaceInfo;

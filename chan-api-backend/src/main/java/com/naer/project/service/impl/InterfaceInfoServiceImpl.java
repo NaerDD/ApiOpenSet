@@ -34,7 +34,7 @@ public class InterfaceInfoServiceImpl extends ServiceImpl<InterfaceInfoMapper, I
 //        Long userId = interfaceInfo.getUserId();
 //        Date createTime = interfaceInfo.getCreateTime();
 //        Date updateTime = interfaceInfo.getUpdateTime();
-//        Integer idDelete = interfaceInfo.getIdDelete();
+//        Integer isDelete = interfaceInfo.getisDelete();
         // 创建时，所有参数必须非空
         if (add) {
             if (StringUtils.isAnyBlank(name)) {

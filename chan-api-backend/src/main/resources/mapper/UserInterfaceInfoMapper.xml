@@ -13,14 +13,14 @@
         <result property="status" column="status" jdbcType="INTEGER"/>
         <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
         <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
-        <result property="idDelete" column="idDelete" jdbcType="TINYINT"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id
         ,userId,interfaceInfoId,
         totalNum,leftNum,status,
-        createTime,updateTime,idDelete
+        createTime,updateTime,isDelete
     </sql>
     <select id="listTopInterfaceInfoInvoke"
             resultType="com.naer.heartApiCommon.model.entity.UserInterfaceInfo">

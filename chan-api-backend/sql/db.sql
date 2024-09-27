@@ -14,7 +14,7 @@ create table if not exists heartapi.`interface_info`
     `userId` bigint not null comment '创建人',
     `createTime` datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     `updateTime` datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    `idDelete` tinyint default 0 not null comment '是否删除(0-未删, 1-已删)'
+    `isDelete` tinyint default 0 not null comment '是否删除(0-未删, 1-已删)'
     ) comment '接口信息';
 
 create table if not exists heartapi.`user_interface_info`
@@ -27,5 +27,5 @@ create table if not exists heartapi.`user_interface_info`
     `status` int default 0 not null comment '0-正常，1-禁用',
     `createTime` datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     `updateTime` datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    `idDelete` tinyint default 0 not null comment '是否删除(0-未删, 1-已删)'
+    `isDelete` tinyint default 0 not null comment '是否删除(0-未删, 1-已删)'
 ) comment '用户调用接口关系表';
