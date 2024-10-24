@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/chan-api-common/chan-api-common.iml" filepath="$PROJECT_DIR$/chan-api-common/chan-api-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/heartApi-common/chanApi-common.iml" filepath="$PROJECT_DIR$/heartApi-common/chanApi-common.iml" />
     </modules>
   </component>

@@ -14,6 +14,8 @@
         <option value="$PROJECT_DIR$/heart-api-gateway/pom.xml" />
         <option value="$PROJECT_DIR$/heart-api-interface/pom.xml" />
         <option value="$PROJECT_DIR$/heartApi-common/pom.xml" />
+        <option value="$PROJECT_DIR$/chan-api-interface/pom.xml" />
+        <option value="$PROJECT_DIR$/chan-api-client-sdk/pom.xml" />
       </list>
     </option>
   </component>

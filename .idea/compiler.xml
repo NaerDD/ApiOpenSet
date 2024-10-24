@@ -22,10 +22,10 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="chan-api-backend" options="-parameters" />
-      <module name="chan-api-client-sdk" options="-parameters" />
+      <module name="chan-api-client-sdk" options="" />
       <module name="chan-api-common" options="-parameters" />
       <module name="chan-api-gateway" options="-parameters" />
-      <module name="chan-api-interface" options="-parameters" />
+      <module name="chan-api-interface" options="" />
       <module name="chanApi-common" options="-parameters" />
     </option>
   </component>
