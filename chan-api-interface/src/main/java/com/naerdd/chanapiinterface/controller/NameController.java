@@ -2,8 +2,8 @@ package com.naerdd.chanapiinterface.controller;
 
 import cn.hutool.crypto.digest.DigestAlgorithm;
 import cn.hutool.crypto.digest.Digester;
-import com.naerdd.chanapiinterface.model.User;
-import com.naerdd.chanapiinterface.utils.SignUtils;
+import com.naer.chanapiclientsdk.utils.SignUtils;
+import com.naer.chanapiclientsdk.model.User;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;

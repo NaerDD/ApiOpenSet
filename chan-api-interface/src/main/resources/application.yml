@@ -4,4 +4,5 @@ server:
     context-path: /api
 naer:
   client:
-    access-key: 123456
+    access-key: naer
+    secret-key: abcdefg

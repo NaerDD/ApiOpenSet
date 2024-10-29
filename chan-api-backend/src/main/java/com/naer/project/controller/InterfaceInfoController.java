@@ -4,10 +4,11 @@ package com.naer.project.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.naer.chanapiclientsdk.client.NaerApiClient;
 import com.naer.heartApiCommon.model.entity.InterfaceInfo;
 import com.naer.heartApiCommon.model.entity.User;
-import com.naer.heartapiclientsdk.model.WeatherParams;
-import com.naer.heartapiclientsdk.client.HeartApiClient;
+//import com.naer.heartapiclientsdk.model.WeatherParams;
+//import com.naer.heartapiclientsdk.client.HeartApiClient;
 import com.naer.project.annotation.AuthCheck;
 import com.naer.project.common.*;
 import com.naer.project.constant.CommonConstant;
@@ -47,7 +48,10 @@ public class InterfaceInfoController {
     private UserService userService;
 
     @Resource
-    private HeartApiClient heartApiClient;
+    private NaerApiClient naerApiClient;
+
+//    @Resource
+//    private HeartApiClient heartApiClient;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -217,29 +221,28 @@ public class InterfaceInfoController {
      * @param request
      * @return
      */
-    @AuthCheck(mustRole = "admin")
     @PostMapping("/online")
-    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest,
-                                                     HttpServletRequest request) {
+    @AuthCheck(mustRole = "e")
+    public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest, HttpServletRequest request) {
         if (idRequest == null || idRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        Long id = idRequest.getId();
-        // 判断是否存在
+        long id = idRequest.getId();
+        //判断是否存在
         InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
         if (oldInterfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        //判断接口是否可以调用
-//        com.naer.heartapiclientsdk.model.User user = new com.naer.heartapiclientsdk.model.User();
-//        user.setUsername("心跳");
-//        String username = heartApiClient.getUsernameByPost(user);
-//        if (StringUtils.isBlank(username)) {
-//            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "接口验证失败");
-//        }
-        // 仅本人或管理员可修改
+        //判断该接口是否可以调用
+        com.naer.chanapiclientsdk.model.User  user = new com.naer.chanapiclientsdk.model.User();
+        user.setUsername("test");
+        String username = naerApiClient.getUserNameByPost(user);
+        if (StringUtils.isBlank(username)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口验证失败");
+        }
+        //仅本人或管理员可修改
         InterfaceInfo interfaceInfo = new InterfaceInfo();
-        interfaceInfo.setId(id);
+        interfaceInfo.setUserId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
@@ -252,26 +255,28 @@ public class InterfaceInfoController {
      * @param request
      * @return
      */
-    @AuthCheck(mustRole = "admin")
     @PostMapping("/offline")
     public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
-                                                      HttpServletRequest request) {
+                                                     HttpServletRequest request) {
         if (idRequest == null || idRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        Long id = idRequest.getId();
-        // 判断是否存在
+        long id = idRequest.getId();
+        //判断是否存在
         InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
         if (oldInterfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        // 仅本人或管理员可修改
+        //仅本人或管理员可修改
         InterfaceInfo interfaceInfo = new InterfaceInfo();
-        interfaceInfo.setId(id);
+        interfaceInfo.setUserId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
+
+
+
 
     /**
      * 测试调用
@@ -304,66 +309,66 @@ public class InterfaceInfoController {
 //        String usernameByPost = apiClient.getUsernameByPost(user);
 //        return ResultUtils.success(usernameByPost);
 //    }
-
-    @PostMapping("/invoke")
-    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
-                                                      HttpServletRequest request) {
-        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        System.out.println(request.getSession().getId());
-        User currentUser = (User) userObj;
-        if (currentUser == null || currentUser.getId() == null) {
-            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-        }
-        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        Long id = interfaceInfoInvokeRequest.getId();
-        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
-//        WeatherParams weatherParams = JSON.parseObject(userRequestParams, WeatherParams.class);
-//        if(String.valueOf(weatherParams.getCity())==null){
-//            throw new BusinessException(50001,"未输入城市！");
+//
+//    @PostMapping("/invoke")
+//    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
+//                                                      HttpServletRequest request) {
+//        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+//        System.out.println(request.getSession().getId());
+//        User currentUser = (User) userObj;
+//        if (currentUser == null || currentUser.getId() == null) {
+//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
 //        }
-        // 判断是否存在
-        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
-        if (oldInterfaceInfo == null) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
-        }
-        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
-        }
-        String url = oldInterfaceInfo.getUrl();
-        User loginUser = userService.getLoginUser(request);
-        String accessKey = loginUser.getAccessKey();
-        String secretKey = loginUser.getSecretKey();
-        HeartApiClient apiClient = new HeartApiClient(accessKey,secretKey);
-        apiClient.setGATEWAY_HOST("http://localhost:8090");
-        //com.naer.heartapiclientsdk.model.User user = JSONUtil.toBean(userRequestParams, com.naer.heartapiclientsdk.model.User.class);
-        if(id==2){
-            WeatherParams weatherParams = JSON.parseObject(userRequestParams,WeatherParams.class);
-            String cacheRedis = stringRedisTemplate.opsForValue()
-                    .get(weatherParams.getCity() + weatherParams.getExtensions());
-            if(cacheRedis != null){
-                new Thread(() -> {
-                    String parameters = JSON.toJSONString(weatherParams);
-                    apiClient.onlineInvoke(parameters, "/api/weather/weatherInfo");
-                }).start();
-                return ResultUtils.success(cacheRedis);
-            }
-            String result = apiClient.getWeatherInfo(weatherParams);
-            return ResultUtils.success(result);
-        }
-        String usernameByPost = apiClient.onlineInvoke(userRequestParams,url);
-        return ResultUtils.success(usernameByPost);
-    }
-
-    @GetMapping("/interfaceNameList")
-    public BaseResponse<Map> interfaceNameList(){
-        List<InterfaceInfo> list = interfaceInfoService.list();
-        Map interfaceNameMap=new HashMap();
-        for (InterfaceInfo interfaceInfo : list) {
-            String name = interfaceInfo.getName();
-            interfaceNameMap.put(interfaceInfo.getName(),interfaceInfo.getName());
-        }
-        return ResultUtils.success(interfaceNameMap);
-    }
+//        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        Long id = interfaceInfoInvokeRequest.getId();
+//        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+////        WeatherParams weatherParams = JSON.parseObject(userRequestParams, WeatherParams.class);
+////        if(String.valueOf(weatherParams.getCity())==null){
+////            throw new BusinessException(50001,"未输入城市！");
+////        }
+//        // 判断是否存在
+//        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+//        if (oldInterfaceInfo == null) {
+//            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+//        }
+//        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
+//        }
+//        String url = oldInterfaceInfo.getUrl();
+//        User loginUser = userService.getLoginUser(request);
+//        String accessKey = loginUser.getAccessKey();
+//        String secretKey = loginUser.getSecretKey();
+//        HeartApiClient apiClient = new HeartApiClient(accessKey,secretKey);
+//        apiClient.setGATEWAY_HOST("http://localhost:8090");
+//        //com.naer.heartapiclientsdk.model.User user = JSONUtil.toBean(userRequestParams, com.naer.heartapiclientsdk.model.User.class);
+//        if(id==2){
+//            WeatherParams weatherParams = JSON.parseObject(userRequestParams,WeatherParams.class);
+//            String cacheRedis = stringRedisTemplate.opsForValue()
+//                    .get(weatherParams.getCity() + weatherParams.getExtensions());
+//            if(cacheRedis != null){
+//                new Thread(() -> {
+//                    String parameters = JSON.toJSONString(weatherParams);
+//                    apiClient.onlineInvoke(parameters, "/api/weather/weatherInfo");
+//                }).start();
+//                return ResultUtils.success(cacheRedis);
+//            }
+//            String result = apiClient.getWeatherInfo(weatherParams);
+//            return ResultUtils.success(result);
+//        }
+//        String usernameByPost = apiClient.onlineInvoke(userRequestParams,url);
+//        return ResultUtils.success(usernameByPost);
+//    }
+//
+//    @GetMapping("/interfaceNameList")
+//    public BaseResponse<Map> interfaceNameList(){
+//        List<InterfaceInfo> list = interfaceInfoService.list();
+//        Map interfaceNameMap=new HashMap();
+//        for (InterfaceInfo interfaceInfo : list) {
+//            String name = interfaceInfo.getName();
+//            interfaceNameMap.put(interfaceInfo.getName(),interfaceInfo.getName());
+//        }
+//        return ResultUtils.success(interfaceNameMap);
+//    }
 }

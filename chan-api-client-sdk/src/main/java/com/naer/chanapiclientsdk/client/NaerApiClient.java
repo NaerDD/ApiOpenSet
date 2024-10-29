@@ -70,4 +70,5 @@ public class NaerApiClient {
         System.out.println(result);
         return result;
     }
+
 }

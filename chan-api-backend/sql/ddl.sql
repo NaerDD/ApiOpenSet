@@ -22,4 +22,3 @@ create table if not exists user
     constraint uni_userAccount
         unique (userAccount)
 ) comment '用户';
-
