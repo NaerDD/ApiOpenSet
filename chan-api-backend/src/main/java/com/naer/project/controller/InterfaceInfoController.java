@@ -222,7 +222,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/online")
-    @AuthCheck(mustRole = "e")
+    @AuthCheck(mustRole = "admin")
     public BaseResponse<Boolean> onlineInterfaceInfo(@RequestBody IdRequest idRequest, HttpServletRequest request) {
         if (idRequest == null || idRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -238,11 +238,11 @@ public class InterfaceInfoController {
         user.setUsername("test");
         String username = naerApiClient.getUserNameByPost(user);
         if (StringUtils.isBlank(username)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"接口验证失败");
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"接口验证失败");
         }
         //仅本人或管理员可修改
         InterfaceInfo interfaceInfo = new InterfaceInfo();
-        interfaceInfo.setUserId(id);
+        interfaceInfo.setId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.ONLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
@@ -256,6 +256,7 @@ public class InterfaceInfoController {
      * @return
      */
     @PostMapping("/offline")
+    @AuthCheck(mustRole = "admin")
     public BaseResponse<Boolean> offlineInterfaceInfo(@RequestBody IdRequest idRequest,
                                                      HttpServletRequest request) {
         if (idRequest == null || idRequest.getId() <= 0) {
@@ -269,13 +270,11 @@ public class InterfaceInfoController {
         }
         //仅本人或管理员可修改
         InterfaceInfo interfaceInfo = new InterfaceInfo();
-        interfaceInfo.setUserId(id);
+        interfaceInfo.setId(id);
         interfaceInfo.setStatus(InterfaceInfoStatusEnum.OFFLINE.getValue());
         boolean result = interfaceInfoService.updateById(interfaceInfo);
         return ResultUtils.success(result);
     }
-
-
 
 
     /**
