@@ -61,11 +61,6 @@ public class User implements Serializable {
     private String secretKey;
 
     /**
-     * 个性签名
-     */
-//    private String signature;
-
-    /**
      * 创建时间
      */
     private Date createTime;

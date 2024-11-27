@@ -39,9 +39,9 @@ public class NameController {
     public String getUserNameByPost(@RequestBody User user, HttpServletRequest request){
         String accessKey = request.getHeader("accessKey");
         String nonce = request.getHeader("nonce");
-        String body = request.getHeader("body");
         String timestamp = request.getHeader("timestamp");
         String sign = request.getHeader("sign");
+        String body = request.getHeader("body");
 
         // 模拟鉴权 ==是运算符 基本数据类型比较值 引用类型比较地址 equals 用于引用数据类型比较值 String是引用数据类型 需要比值
         if(!accessKey.equals("naer")){
