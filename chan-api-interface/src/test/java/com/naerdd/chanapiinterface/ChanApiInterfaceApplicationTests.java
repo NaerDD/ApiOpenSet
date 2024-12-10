@@ -17,7 +17,7 @@ class ChanApiInterfaceApplicationTests {
     void contextLoads() {
         String result = naerApiClient.getNameByGet("naer");
         User user = new User();
-        user.setUsername("naerdd");
+        user.setUsername("naer");
         String naer1 = naerApiClient.getUserNameByPost(user);
         System.out.println(result);
         System.out.println(naer1);

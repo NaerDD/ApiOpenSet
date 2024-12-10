@@ -3,7 +3,7 @@ package com.naer.project.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.naer.heartApiCommon.model.entity.UserInterfaceInfo;
+import com.naer.naerApiCommon.model.entity.UserInterfaceInfo;
 
 import java.util.List;
 

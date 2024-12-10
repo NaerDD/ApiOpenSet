@@ -2,7 +2,7 @@ package com.naer.project.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
 
 /**
 * @author 李诗豪

@@ -1,7 +1,7 @@
-package com.naer.heartApiCommon.model.vo;
+package com.naer.naerApiCommon.model.vo;
 
 
-import com.naer.heartApiCommon.model.entity.Post;
+import com.naer.naerApiCommon.model.entity.Post;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -2,7 +2,7 @@ package com.naer.project.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 

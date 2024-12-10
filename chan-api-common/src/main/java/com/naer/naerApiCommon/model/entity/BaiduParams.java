@@ -1,4 +1,4 @@
-package com.naer.heartApiCommon.model.entity;
+package com.naer.naerApiCommon.model.entity;
 
 import lombok.Data;
 

@@ -1,8 +1,8 @@
-package com.naer.heartApiCommon.service;
+package com.naer.naerApiCommon.service;
 
 
 
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
 
 /**
 * @author 李诗豪

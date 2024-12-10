@@ -1,8 +1,8 @@
 -- 创建库
-create database if not exists NaerApi;
+create database if not exists naerApiCommon;
 
 -- 切换库
-use NaerApi;
+use naerApiCommon;
 
 -- 用户表
 create table if not exists user

@@ -4,7 +4,7 @@ package com.naer.project.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.naer.heartApiCommon.model.entity.UserInterfaceInfo;
+import com.naer.naerApiCommon.model.entity.UserInterfaceInfo;
 import com.naer.project.common.BaseResponse;
 import com.naer.project.common.ErrorCode;
 import com.naer.project.exception.BusinessException;

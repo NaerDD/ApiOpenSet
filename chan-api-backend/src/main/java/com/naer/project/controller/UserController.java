@@ -3,7 +3,7 @@ package com.naer.project.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.User;
 import com.naer.project.common.BaseResponse;
 import com.naer.project.common.DeleteRequest;
 import com.naer.project.common.ErrorCode;

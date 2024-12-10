@@ -1,4 +1,4 @@
-package com.naer.heartApiCommon.model.vo;
+package com.naer.naerApiCommon.model.vo;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.naer.project.service;
 
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

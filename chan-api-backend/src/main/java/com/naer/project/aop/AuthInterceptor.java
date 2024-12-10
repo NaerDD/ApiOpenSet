@@ -1,7 +1,7 @@
 package com.naer.project.aop;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.User;
 import com.naer.project.annotation.AuthCheck;
 import com.naer.project.exception.BusinessException;
 import com.naer.project.service.UserService;

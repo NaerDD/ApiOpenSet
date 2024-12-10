@@ -1,10 +1,10 @@
 package com.naer.heartapigateway;
 
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
-import com.naer.heartApiCommon.model.entity.User;
-import com.naer.heartApiCommon.service.InnerInterfaceInfoService;
-import com.naer.heartApiCommon.service.InnerUserInterfaceInfoService;
-import com.naer.heartApiCommon.service.InnerUserService;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.User;
+import com.naer.naerApiCommon.service.InnerInterfaceInfoService;
+import com.naer.naerApiCommon.service.InnerUserInterfaceInfoService;
+import com.naer.naerApiCommon.service.InnerUserService;
 import com.naer.heartapiclientsdk.utils.SignUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboReference;

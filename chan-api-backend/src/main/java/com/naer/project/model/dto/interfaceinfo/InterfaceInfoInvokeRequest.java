@@ -5,7 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 创建请求
+ * 接口调用请求
  *
  * @TableName product
  */

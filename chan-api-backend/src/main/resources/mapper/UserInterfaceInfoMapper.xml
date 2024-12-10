@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.naer.project.mapper.UserInterfaceInfoMapper">
 
-    <resultMap id="BaseResultMap" type="com.naer.heartApiCommon.model.entity.UserInterfaceInfo">
+    <resultMap id="BaseResultMap" type="com.naer.naerApiCommon.model.entity.UserInterfaceInfo">
         <id property="id" column="id" jdbcType="BIGINT"/>
         <result property="userId" column="userId" jdbcType="BIGINT"/>
         <result property="interfaceInfoId" column="interfaceInfoId" jdbcType="BIGINT"/>
@@ -23,7 +23,7 @@
         createTime,updateTime,isDelete
     </sql>
     <select id="listTopInterfaceInfoInvoke"
-            resultType="com.naer.heartApiCommon.model.entity.UserInterfaceInfo">
+            resultType="com.naer.naerApiCommon.model.entity.UserInterfaceInfo">
         select interfaceInfoId, sum(totalNum) as totalNum
         from user_interface_info
         group by interfaceInfoId

@@ -1,8 +1,8 @@
 package com.naer.project.service.innerImpl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
-import com.naer.heartApiCommon.service.InnerInterfaceInfoService;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.service.InnerInterfaceInfoService;
 import com.naer.project.common.ErrorCode;
 import com.naer.project.exception.BusinessException;
 import com.naer.project.mapper.InterfaceInfoMapper;

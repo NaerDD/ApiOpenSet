@@ -4,9 +4,10 @@ package com.naer.project.controller;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.naer.chanapiclientsdk.client.NaerApiClient;
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.User;
 //import com.naer.heartapiclientsdk.model.WeatherParams;
 //import com.naer.heartapiclientsdk.client.HeartApiClient;
 import com.naer.project.annotation.AuthCheck;
@@ -29,12 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.naer.project.constant.UserConstant.USER_LOGIN_STATE;
-
 
 @RestController
 @RequestMapping("/interfaceInfo")
@@ -49,9 +45,6 @@ public class InterfaceInfoController {
 
     @Resource
     private NaerApiClient naerApiClient;
-
-//    @Resource
-//    private HeartApiClient heartApiClient;
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
@@ -276,7 +269,6 @@ public class InterfaceInfoController {
         return ResultUtils.success(result);
     }
 
-
     /**
      * 测试调用
      *
@@ -284,30 +276,35 @@ public class InterfaceInfoController {
      * @param request
      * @return
      */
-//    @PostMapping("/invoke")
-//    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
-//                                                      HttpServletRequest request) {
-//        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-//        }
-//        Long id = interfaceInfoInvokeRequest.getId();
-//        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
-//        // 判断是否存在
-//        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
-//        if (oldInterfaceInfo == null) {
-//            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
-//        }
-//        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
-//        }
-//        User loginUser = userService.getLoginUser(request);
-//        String accessKey = loginUser.getAccessKey();
-//        String secretKey = loginUser.getSecretKey();
-//        HeartApiClient apiClient = new HeartApiClient(accessKey,secretKey);
-//        com.naer.heartapiclientsdk.model.User user = JSONUtil.toBean(userRequestParams, com.naer.heartapiclientsdk.model.User.class);
-//        String usernameByPost = apiClient.getUsernameByPost(user);
-//        return ResultUtils.success(usernameByPost);
-//    }
+    @PostMapping("/invoke")
+    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest, HttpServletRequest request) {
+        if (interfaceInfoInvokeRequest == null||interfaceInfoInvokeRequest.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long id = interfaceInfoInvokeRequest.getId();
+        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
+        //判断是否存在
+        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
+        if (oldInterfaceInfo == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if(oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
+        }
+        User user = userService.getLoginUser(request);
+        String accessKey = user.getAccessKey();
+        String secretKey = user.getSecretKey();
+        //这里不能用之前的sdk中的aksk
+        NaerApiClient tempClient = new NaerApiClient(accessKey, secretKey);
+        System.out.println(secretKey);
+        System.out.println(accessKey);
+        Gson gson = new Gson();
+        //将userRequestParams 转成User对象
+        com.naer.chanapiclientsdk.model.User user1 = gson.fromJson(userRequestParams, com.naer.chanapiclientsdk.model.User.class);
+        String userNameByPost = tempClient.getUserNameByPost(user1);
+        return ResultUtils.success(userNameByPost);
+    }
+
 //
 //    @PostMapping("/invoke")
 //    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,

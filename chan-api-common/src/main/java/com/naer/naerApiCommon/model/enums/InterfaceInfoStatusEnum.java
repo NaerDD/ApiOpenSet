@@ -1,25 +1,32 @@
-package com.naer.heartApiCommon.model.enums;
+package com.naer.naerApiCommon.model.enums;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 帖子审核状态枚举
+ * 接口信息状态枚举
  *
  * @author yupi
  */
-public enum PostReviewStatusEnum {
+public enum InterfaceInfoStatusEnum {
 
-    REVIEWING("待审核", 0),
-    PASS("通过", 1),
-    REJECT("拒绝", 2);
+    /**
+     * 接口下线
+     */
+    OFFLINE("下线", 0),
+
+    /**
+     * 接口上线
+     */
+    ONLINE("上线", 1);
+
 
     private final String text;
 
     private final int value;
 
-    PostReviewStatusEnum(String text, int value) {
+    InterfaceInfoStatusEnum(String text, int value) {
         this.text = text;
         this.value = value;
     }

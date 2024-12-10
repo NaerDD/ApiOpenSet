@@ -1,6 +1,6 @@
 use heartapi;
 -- 接口信息
-create table if not exists naerapi.`interface_info`
+create table if not exists naerApiCommon.`interface_info`
 (
     `id` bigint not null auto_increment comment '主键' primary key,
     `name` varchar(256) not null comment '接口名称',

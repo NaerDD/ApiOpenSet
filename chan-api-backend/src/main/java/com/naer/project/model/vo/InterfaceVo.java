@@ -1,6 +1,6 @@
 package com.naer.project.model.vo;
 
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
 import lombok.Data;
 
 /**

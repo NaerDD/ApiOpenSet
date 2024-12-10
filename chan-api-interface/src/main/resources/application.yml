@@ -5,4 +5,4 @@ server:
 naer:
   client:
     access-key: naer
-    secret-key: abcdefg
+    secret-key: 1234

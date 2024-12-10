@@ -1,8 +1,8 @@
 package com.naer.project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
-import com.naer.heartApiCommon.model.entity.UserInterfaceInfo;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.UserInterfaceInfo;
 import com.naer.project.annotation.AuthCheck;
 import com.naer.project.common.BaseResponse;
 import com.naer.project.common.ErrorCode;

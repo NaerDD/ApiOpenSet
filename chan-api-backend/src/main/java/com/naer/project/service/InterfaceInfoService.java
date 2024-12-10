@@ -2,7 +2,7 @@ package com.naer.project.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.naer.heartApiCommon.model.entity.InterfaceInfo;
+import com.naer.naerApiCommon.model.entity.InterfaceInfo;
 
 /**
 * @author 李诗豪

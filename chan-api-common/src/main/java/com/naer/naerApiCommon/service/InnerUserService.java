@@ -1,8 +1,8 @@
-package com.naer.heartApiCommon.service;
+package com.naer.naerApiCommon.service;
 
 
 
-import com.naer.heartApiCommon.model.entity.User;
+import com.naer.naerApiCommon.model.entity.User;
 
 /**
  * 用户服务

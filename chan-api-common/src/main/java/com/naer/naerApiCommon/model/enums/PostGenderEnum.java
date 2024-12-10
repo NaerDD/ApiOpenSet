@@ -1,32 +1,24 @@
-package com.naer.heartApiCommon.model.enums;
+package com.naer.naerApiCommon.model.enums;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 接口信息状态枚举
+ * 帖子性别枚举
  *
  * @author yupi
  */
-public enum InterfaceInfoStatusEnum {
+public enum PostGenderEnum {
 
-    /**
-     * 接口下线
-     */
-    OFFLINE("下线", 0),
-
-    /**
-     * 接口上线
-     */
-    ONLINE("上线", 1);
-
+    MALE("男", 0),
+    FEMALE("女", 1);
 
     private final String text;
 
     private final int value;
 
-    InterfaceInfoStatusEnum(String text, int value) {
+    PostGenderEnum(String text, int value) {
         this.text = text;
         this.value = value;
     }
