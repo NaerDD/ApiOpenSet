@@ -16,6 +16,8 @@
  */
 package com.naer.project.provider;
 
+import org.apache.dubbo.config.annotation.DubboService;
+
 import java.util.concurrent.CompletableFuture;
 
 public interface DemoService {

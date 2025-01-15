@@ -1,27 +1,19 @@
 package com.naer.project.service.impl;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.naer.naerApiCommon.model.entity.UserInterfaceInfo;
-import com.naer.project.common.BaseResponse;
 import com.naer.project.common.ErrorCode;
 import com.naer.project.exception.BusinessException;
 import com.naer.project.mapper.UserInterfaceInfoMapper;
 import com.naer.project.service.UserInterfaceInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @author 李诗豪
- * @description 针对表【user_interface_info(用户调用接口关系表)】的数据库操作Service实现
- * @createDate 2022-12-06 09:36:29
- */
+
 @Service
 public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoMapper, UserInterfaceInfo>
         implements UserInterfaceInfoService {
-
 
     @Override
     public void validUserInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add) {
@@ -49,21 +41,14 @@ public class UserInterfaceInfoServiceImpl extends ServiceImpl<UserInterfaceInfoM
      */
     @Override
     public boolean invokeCount(long interfaceInfoId, long userId) {
+        //先判断是否有这条记录 如果有就执行 没有就新增
         if (interfaceInfoId <= 0 || userId <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        LambdaUpdateWrapper<UserInterfaceInfo> luw = new LambdaUpdateWrapper<>();
-        luw.eq(UserInterfaceInfo::getInterfaceInfoId, interfaceInfoId)
-                .eq(UserInterfaceInfo::getUserId, userId);
+        UpdateWrapper<UserInterfaceInfo> luw = new UpdateWrapper<>();
+        luw.eq("interfaceInfoId", interfaceInfoId);
+        luw.eq("userId", userId);
         luw.setSql(" leftNum = leftNum - 1 , totalNum = totalNum + 1 ");
-
         return this.update(luw);
     }
-
-
-
 }
-
-
-
-

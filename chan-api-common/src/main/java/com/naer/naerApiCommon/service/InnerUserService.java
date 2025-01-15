@@ -1,7 +1,5 @@
 package com.naer.naerApiCommon.service;
 
-
-
 import com.naer.naerApiCommon.model.entity.User;
 
 /**
@@ -11,10 +9,6 @@ import com.naer.naerApiCommon.model.entity.User;
  */
 public interface InnerUserService {
 
-    /**
-     * 数据库中查看已分配给用户的密钥
-     * @param accessKey
-     * @return
-     */
     User getInvokeUser(String accessKey);
+
 }

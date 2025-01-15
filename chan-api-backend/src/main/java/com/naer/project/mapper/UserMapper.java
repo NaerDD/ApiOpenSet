@@ -2,7 +2,6 @@ package com.naer.project.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.naer.naerApiCommon.model.entity.User;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @Entity com.yupi.project.model.domain.User

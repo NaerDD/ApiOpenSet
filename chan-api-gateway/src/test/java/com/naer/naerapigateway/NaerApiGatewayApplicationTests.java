@@ -1,10 +1,10 @@
-package com.naer.heartapigateway;
+package com.naer.naerapigateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HeartApiGatewayApplicationTests {
+class NaerApiGatewayApplicationTests {
 
     @Test
     void contextLoads() {

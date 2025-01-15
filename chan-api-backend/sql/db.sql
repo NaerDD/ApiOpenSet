@@ -1,4 +1,4 @@
-use heartapi;
+use naerapi;
 -- 接口信息
 create table if not exists naerApiCommon.`interface_info`
 (
@@ -17,7 +17,7 @@ create table if not exists naerApiCommon.`interface_info`
     `isDelete` tinyint default 0 not null comment '是否删除(0-未删, 1-已删)'
     ) comment '接口信息';
 
-create table if not exists heartapi.`user_interface_info`
+create table if not exists naerapi.`user_interface_info`
 (
     `id` bigint not null auto_increment comment '主键' primary key,
     `userId` bigint not null comment '调用用户ID',

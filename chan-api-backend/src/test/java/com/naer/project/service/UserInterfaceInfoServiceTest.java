@@ -1,7 +1,5 @@
 package com.naer.project.service;
 
-
-
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
@@ -14,11 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserInterfaceInfoServiceTest {
 
     @Autowired
-    private UserInterfaceInfoService userInterfaceInfoService;
+    private UserInterfaceInfoService UserInterfaceInfoService;
 
     @Test
     public void invokeCount() {
-        boolean b = userInterfaceInfoService.invokeCount(1l, 1l);
+        boolean b = UserInterfaceInfoService.invokeCount(1l, 1l);
         Assertions.assertTrue(b);
     }
 }

@@ -1,16 +1,9 @@
 package com.naer.project.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.naer.naerApiCommon.model.entity.InterfaceInfo;
 import com.naer.naerApiCommon.model.entity.User;
 import com.naer.naerApiCommon.model.entity.UserInterfaceInfo;
-import com.naer.naerApiCommon.model.vo.SelfInterfaceDateVo;
 import com.naer.project.annotation.AuthCheck;
 import com.naer.project.common.*;
 import com.naer.project.constant.CommonConstant;
@@ -19,32 +12,24 @@ import com.naer.project.exception.BusinessException;
 import com.naer.project.model.dto.userInterfaceInfo.UserInterfaceInfoAddRequest;
 import com.naer.project.model.dto.userInterfaceInfo.UserInterfaceInfoQueryRequest;
 import com.naer.project.model.dto.userInterfaceInfo.UserInterfaceInfoUpdateRequest;
-import com.naer.project.service.InterfaceInfoService;
 import com.naer.project.service.UserInterfaceInfoService;
 import com.naer.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-import static com.naer.project.constant.UserConstant.USER_LOGIN_STATE;
-
 @RestController
-@RequestMapping("/userInterfaceInfoInfo")
+@RequestMapping("/userInterfaceInfo")
 @Slf4j
 public class UserInterfaceInfoController {
 
     @Autowired
-    private UserInterfaceInfoService userInterfaceInfoInfoService;
-
-    @Autowired
-    private InterfaceInfoService interfaceInfoService;
+    private UserInterfaceInfoService userInterfaceInfoService;
 
     @Autowired
     private UserService userService;
@@ -68,10 +53,10 @@ public class UserInterfaceInfoController {
         UserInterfaceInfo userInterfaceInfoInfo = new UserInterfaceInfo();
         BeanUtils.copyProperties(userInterfaceInfoInfoAddRequest, userInterfaceInfoInfo);
         // 校验
-        userInterfaceInfoInfoService.validUserInterfaceInfo(userInterfaceInfoInfo, true);
+        userInterfaceInfoService.validUserInterfaceInfo(userInterfaceInfoInfo, true);
         User loginUser = userService.getLoginUser(request);
         userInterfaceInfoInfo.setUserId(loginUser.getId());
-        boolean result = userInterfaceInfoInfoService.save(userInterfaceInfoInfo);
+        boolean result = userInterfaceInfoService.save(userInterfaceInfoInfo);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR);
         }
@@ -95,7 +80,7 @@ public class UserInterfaceInfoController {
         User user = userService.getLoginUser(request);
         long id = deleteRequest.getId();
         // 判断是否存在
-        UserInterfaceInfo oldUserInterfaceInfo = userInterfaceInfoInfoService.getById(id);
+        UserInterfaceInfo oldUserInterfaceInfo = userInterfaceInfoService.getById(id);
         if (oldUserInterfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
@@ -103,7 +88,7 @@ public class UserInterfaceInfoController {
         if (!oldUserInterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        boolean b = userInterfaceInfoInfoService.removeById(id);
+        boolean b = userInterfaceInfoService.removeById(id);
         return ResultUtils.success(b);
     }
 
@@ -124,11 +109,11 @@ public class UserInterfaceInfoController {
         UserInterfaceInfo userInterfaceInfoInfo = new UserInterfaceInfo();
         BeanUtils.copyProperties(userInterfaceInfoInfoUpdateRequest, userInterfaceInfoInfo);
         // 参数校验
-        userInterfaceInfoInfoService.validUserInterfaceInfo(userInterfaceInfoInfo, false);
+        userInterfaceInfoService.validUserInterfaceInfo(userInterfaceInfoInfo, false);
         User user = userService.getLoginUser(request);
         long id = userInterfaceInfoInfoUpdateRequest.getId();
         // 判断是否存在
-        UserInterfaceInfo oldUserInterfaceInfo = userInterfaceInfoInfoService.getById(id);
+        UserInterfaceInfo oldUserInterfaceInfo = userInterfaceInfoService.getById(id);
         if (oldUserInterfaceInfo == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
@@ -136,7 +121,7 @@ public class UserInterfaceInfoController {
         if (!oldUserInterfaceInfo.getUserId().equals(user.getId()) && !userService.isAdmin(request)) {
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }
-        boolean result = userInterfaceInfoInfoService.updateById(userInterfaceInfoInfo);
+        boolean result = userInterfaceInfoService.updateById(userInterfaceInfoInfo);
         return ResultUtils.success(result);
     }
 
@@ -152,7 +137,7 @@ public class UserInterfaceInfoController {
         if (id <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        UserInterfaceInfo userInterfaceInfoInfo = userInterfaceInfoInfoService.getById(id);
+        UserInterfaceInfo userInterfaceInfoInfo = userInterfaceInfoService.getById(id);
         return ResultUtils.success(userInterfaceInfoInfo);
     }
 
@@ -170,7 +155,7 @@ public class UserInterfaceInfoController {
             BeanUtils.copyProperties(userInterfaceInfoInfoQueryRequest, userInterfaceInfoInfoQuery);
         }
         QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>(userInterfaceInfoInfoQuery);
-        List<UserInterfaceInfo> userInterfaceInfoInfoList = userInterfaceInfoInfoService.list(queryWrapper);
+        List<UserInterfaceInfo> userInterfaceInfoInfoList = userInterfaceInfoService.list(queryWrapper);
         return ResultUtils.success(userInterfaceInfoInfoList);
     }
 
@@ -200,64 +185,64 @@ public class UserInterfaceInfoController {
         QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>(userInterfaceInfoInfoQuery);
         queryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                 sortOrder.equals(CommonConstant.SORT_ORDER_ASC), sortField);
-        Page<UserInterfaceInfo> userInterfaceInfoInfoPage = userInterfaceInfoInfoService.page(new Page<>(current, size), queryWrapper);
+        Page<UserInterfaceInfo> userInterfaceInfoInfoPage = userInterfaceInfoService.page(new Page<>(current, size), queryWrapper);
         return ResultUtils.success(userInterfaceInfoInfoPage);
     }
 
     //endregion
-    @Transactional
-    @PostMapping("/payInterface")
-    public BaseResponse<Object> payInterface(String interfaceName, String adminPsd, String payAccount, int num) {
-
-        LambdaQueryWrapper<InterfaceInfo> lqw = new LambdaQueryWrapper<InterfaceInfo>();
-        lqw.eq(InterfaceInfo::getName, interfaceName);
-        InterfaceInfo interfaceInfo = interfaceInfoService.getOne(lqw);
-
-        LambdaQueryWrapper<User> lqw1 = new LambdaQueryWrapper<User>();
-        lqw1.eq(User::getUserAccount, payAccount);
-        User user = userService.getOne(lqw1);
-        if (user == null) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
-        }
-        LambdaQueryWrapper<UserInterfaceInfo> lqw2 = new LambdaQueryWrapper<UserInterfaceInfo>();
-        lqw2.eq(UserInterfaceInfo::getUserId, user.getId());
-        lqw2.eq(UserInterfaceInfo::getInterfaceInfoId, interfaceInfo.getId());
-        UserInterfaceInfo one = userInterfaceInfoInfoService.getOne(lqw2);
-        if (one != null) {
-            one.setLeftNum(one.getLeftNum() + num);
-            userInterfaceInfoInfoService.saveOrUpdate(one);
-        } else {
-            UserInterfaceInfo userInterfaceInfo = new UserInterfaceInfo();
-            userInterfaceInfo.setUserId(user.getId());
-            userInterfaceInfo.setInterfaceInfoId(interfaceInfo.getId());
-            userInterfaceInfo.setLeftNum(num);
-            userInterfaceInfoInfoService.save(userInterfaceInfo);
-        }
-        return ResultUtils.success(true);
-    }
-
-    @GetMapping("/selfInterfaceData")
-    public BaseResponse<List<SelfInterfaceDateVo>> selfInterfaceData(HttpServletRequest request){
-        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-        System.out.println(request.getSession().getId());
-        User currentUser = (User) userObj;
-        Long id = currentUser.getId();
-        LambdaQueryWrapper<UserInterfaceInfo> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(UserInterfaceInfo::getUserId,id);
-        List<UserInterfaceInfo> list = userInterfaceInfoInfoService.list(lqw);
-        List<SelfInterfaceDateVo> selfInterfaceDateVos = new ArrayList<>();
-        for (UserInterfaceInfo userInterfaceInfo : list) {
-            SelfInterfaceDateVo selfInterfaceDateVo = new SelfInterfaceDateVo();
-            BeanUtils.copyProperties(userInterfaceInfo,selfInterfaceDateVo);
-            Long interfaceInfoId = userInterfaceInfo.getInterfaceInfoId();
-            LambdaQueryWrapper<InterfaceInfo> lqw1 = new LambdaQueryWrapper<>();
-            lqw1.eq(InterfaceInfo::getId,interfaceInfoId);
-            InterfaceInfo one = interfaceInfoService.getOne(lqw1);
-            String name = one.getName();
-            selfInterfaceDateVo.setInterfaceName(name);
-            selfInterfaceDateVos.add(selfInterfaceDateVo);
-        }
-        return ResultUtils.success(selfInterfaceDateVos);
-    }
+//    @Transactional
+//    @PostMapping("/payInterface")
+//    public BaseResponse<Object> payInterface(String interfaceName, String adminPsd, String payAccount, int num) {
+//
+//        LambdaQueryWrapper<InterfaceInfo> lqw = new LambdaQueryWrapper<InterfaceInfo>();
+//        lqw.eq(InterfaceInfo::getName, interfaceName);
+//        InterfaceInfo interfaceInfo = interfaceInfoService.getOne(lqw);
+//
+//        LambdaQueryWrapper<User> lqw1 = new LambdaQueryWrapper<User>();
+//        lqw1.eq(User::getUserAccount, payAccount);
+//        User user = userService.getOne(lqw1);
+//        if (user == null) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在");
+//        }
+//        LambdaQueryWrapper<UserInterfaceInfo> lqw2 = new LambdaQueryWrapper<UserInterfaceInfo>();
+//        lqw2.eq(UserInterfaceInfo::getUserId, user.getId());
+//        lqw2.eq(UserInterfaceInfo::getInterfaceInfoId, interfaceInfo.getId());
+//        UserInterfaceInfo one = userInterfaceInfoInfoService.getOne(lqw2);
+//        if (one != null) {
+//            one.setLeftNum(one.getLeftNum() + num);
+//            userInterfaceInfoInfoService.saveOrUpdate(one);
+//        } else {
+//            UserInterfaceInfo userInterfaceInfo = new UserInterfaceInfo();
+//            userInterfaceInfo.setUserId(user.getId());
+//            userInterfaceInfo.setInterfaceInfoId(interfaceInfo.getId());
+//            userInterfaceInfo.setLeftNum(num);
+//            userInterfaceInfoInfoService.save(userInterfaceInfo);
+//        }
+//        return ResultUtils.success(true);
+//    }
+//
+//    @GetMapping("/selfInterfaceData")
+//    public BaseResponse<List<SelfInterfaceDateVo>> selfInterfaceData(HttpServletRequest request){
+//        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+//        System.out.println(request.getSession().getId());
+//        User currentUser = (User) userObj;
+//        Long id = currentUser.getId();
+//        LambdaQueryWrapper<UserInterfaceInfo> lqw = new LambdaQueryWrapper<>();
+//        lqw.eq(UserInterfaceInfo::getUserId,id);
+//        List<UserInterfaceInfo> list = userInterfaceInfoInfoService.list(lqw);
+//        List<SelfInterfaceDateVo> selfInterfaceDateVos = new ArrayList<>();
+//        for (UserInterfaceInfo userInterfaceInfo : list) {
+//            SelfInterfaceDateVo selfInterfaceDateVo = new SelfInterfaceDateVo();
+//            BeanUtils.copyProperties(userInterfaceInfo,selfInterfaceDateVo);
+//            Long interfaceInfoId = userInterfaceInfo.getInterfaceInfoId();
+//            LambdaQueryWrapper<InterfaceInfo> lqw1 = new LambdaQueryWrapper<>();
+//            lqw1.eq(InterfaceInfo::getId,interfaceInfoId);
+//            InterfaceInfo one = interfaceInfoService.getOne(lqw1);
+//            String name = one.getName();
+//            selfInterfaceDateVo.setInterfaceName(name);
+//            selfInterfaceDateVos.add(selfInterfaceDateVo);
+//        }
+//        return ResultUtils.success(selfInterfaceDateVos);
+//    }
 
 }

@@ -4,22 +4,22 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - AddResponseHeader=source, heart
+        - AddResponseHeader=source, naer
       routes:
         - id: api_route
           uri: http://localhost:8123
           predicates:
             - Path=/api/**
-  redis:
-    host: 106.227.14.70
-    port: 6379
-    lettuce:
-      pool:
-        max-active: 8  #最大连接
-        max-idle: 8   #最大空闲连接
-        min-idle: 0   #最小空闲连接
-        max-wait: 100ms #连接等待时间
-    database: 0
+#  redis:
+#    host: 106.227.14.70
+#    port: 6379
+#    lettuce:
+#      pool:
+#        max-active: 8  #最大连接
+#        max-idle: 8   #最大空闲连接
+#        min-idle: 0   #最小空闲连接
+#        max-wait: 100ms #连接等待时间
+#    database: 0
 logging:
   level:
     org:
@@ -27,16 +27,16 @@ logging:
         cloud:
           gateway: trace
 dubbo:
-  consumer:
-    timeout: 3000
-    retries: 0
+#  consumer:
+#    timeout: 5000
+#    retries: 0
   application:
-    name: heartApi-gateway
+    name: naerapi-gateway
   protocol:
     name: dubbo
     port: -1
   registry:
     id: zk-registry
-    address: nacos://nacos.heshuoshi.top:8848
-    parameters:
-      namespace: be38b4f5-9677-40f6-b402-4c800814edae
+    address: nacos://localhost:8848
+#    parameters:
+#      namespace: be38b4f5-9677-40f6-b402-4c800814edae

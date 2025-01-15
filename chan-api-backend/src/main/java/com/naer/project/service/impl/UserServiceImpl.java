@@ -8,14 +8,12 @@ import com.naer.naerApiCommon.model.entity.User;
 import com.naer.project.common.ErrorCode;
 import com.naer.project.exception.BusinessException;
 import com.naer.project.mapper.UserMapper;
-import com.naer.project.service.InterfaceInfoService;
-import com.naer.project.service.UserInterfaceInfoService;
 import com.naer.project.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import javax.annotation.Resource;
+
 import javax.servlet.http.HttpServletRequest;
 import static com.naer.project.constant.UserConstant.ADMIN_ROLE;
 import static com.naer.project.constant.UserConstant.USER_LOGIN_STATE;
@@ -30,14 +28,6 @@ import static com.naer.project.constant.UserConstant.USER_LOGIN_STATE;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         implements UserService {
 
-    @Resource
-    private UserMapper userMapper;
-
-    @Resource
-    private UserInterfaceInfoService userInterfaceInfoService;
-
-    @Resource
-    private InterfaceInfoService interfaceInfoService;
 
     /**
      * 盐值，混淆密码
@@ -64,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 账户不能重复
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("userAccount", userAccount);
-            long count = userMapper.selectCount(queryWrapper);
+            long count = this.baseMapper.selectCount(queryWrapper);
             if (count > 0) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
             }
@@ -105,7 +95,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userAccount", userAccount);
         queryWrapper.eq("userPassword", encryptPassword);
-        User user = userMapper.selectOne(queryWrapper);
+        User user = this.baseMapper.selectOne(queryWrapper);
         // 用户不存在
         if (user == null) {
             log.info("user login failed, userAccount cannot match userPassword");
@@ -171,7 +161,3 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
 }
-
-
-
-
