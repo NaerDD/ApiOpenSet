@@ -1,2 +1,3 @@
 # Project exclude paths
 /chan-api-common/target/
+.idea

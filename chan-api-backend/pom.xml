@@ -13,7 +13,6 @@
     <artifactId>chan-api-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>chanApi-backend</name>
-    <description>Naer接口</description>
     <properties>
         <java.version>1.8</java.version>
         <dubbo.version>3.0.7</dubbo.version>
