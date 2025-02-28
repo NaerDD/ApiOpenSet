@@ -64,15 +64,20 @@ public class InterfaceInfoController {
         }
         InterfaceInfo interfaceInfo = new InterfaceInfo();
         BeanUtils.copyProperties(interfaceInfoAddRequest, interfaceInfo);
-        // 校验
+        // 校验 为什么要传个add 因为新增时要检查是否 所有参数必须为空 而更新时 不需要走这段检查逻辑 传false即可
+        // 这里只做验证  没有返回值
         interfaceInfoService.validInterfaceInfo(interfaceInfo, true);
+        //读取登录用户
         User loginUser = userService.getLoginUser(request);
+        //设置新增接口的用户ID给接口
         interfaceInfo.setUserId(loginUser.getId());
+        //保存接口
         boolean result = interfaceInfoService.save(interfaceInfo);
         if (!result) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR);
         }
         long newInterfaceInfoId = interfaceInfo.getId();
+        //返回新增接口ID
         return ResultUtils.success(newInterfaceInfoId);
     }
 
