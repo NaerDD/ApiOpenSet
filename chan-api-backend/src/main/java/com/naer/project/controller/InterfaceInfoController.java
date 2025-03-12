@@ -45,11 +45,6 @@ public class InterfaceInfoController {
     @Resource
     private NaerApiClient naerApiClient;
 
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
-
-    // region 增删改查
-
     /**
      * 创建
      *
@@ -300,75 +295,11 @@ public class InterfaceInfoController {
         String secretKey = user.getSecretKey();
         //这里不能用之前的sdk中的aksk
         NaerApiClient tempClient = new NaerApiClient(accessKey, secretKey);
-        System.out.println(secretKey);
-        System.out.println(accessKey);
         Gson gson = new Gson();
+        System.out.println("原始 userRequestParams：" + userRequestParams);
         //将userRequestParams 转成User对象
         com.naer.chanapiclientsdk.model.User user1 = gson.fromJson(userRequestParams, com.naer.chanapiclientsdk.model.User.class);
         String userNameByPost = tempClient.getUserNameByPost(user1);
         return ResultUtils.success(userNameByPost);
     }
-
-//
-//    @PostMapping("/invoke")
-//    public BaseResponse<Object> invokeInterfaceInfo(@RequestBody InterfaceInfoInvokeRequest interfaceInfoInvokeRequest,
-//                                                      HttpServletRequest request) {
-//        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
-//        System.out.println(request.getSession().getId());
-//        User currentUser = (User) userObj;
-//        if (currentUser == null || currentUser.getId() == null) {
-//            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
-//        }
-//        if (interfaceInfoInvokeRequest == null || interfaceInfoInvokeRequest.getId() <= 0) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-//        }
-//        Long id = interfaceInfoInvokeRequest.getId();
-//        String userRequestParams = interfaceInfoInvokeRequest.getUserRequestParams();
-////        WeatherParams weatherParams = JSON.parseObject(userRequestParams, WeatherParams.class);
-////        if(String.valueOf(weatherParams.getCity())==null){
-////            throw new BusinessException(50001,"未输入城市！");
-////        }
-//        // 判断是否存在
-//        InterfaceInfo oldInterfaceInfo = interfaceInfoService.getById(id);
-//        if (oldInterfaceInfo == null) {
-//            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
-//        }
-//        if (oldInterfaceInfo.getStatus() == InterfaceInfoStatusEnum.OFFLINE.getValue()) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "接口已关闭");
-//        }
-//        String url = oldInterfaceInfo.getUrl();
-//        User loginUser = userService.getLoginUser(request);
-//        String accessKey = loginUser.getAccessKey();
-//        String secretKey = loginUser.getSecretKey();
-//        HeartApiClient apiClient = new HeartApiClient(accessKey,secretKey);
-//        apiClient.setGATEWAY_HOST("http://localhost:8090");
-//        //com.naer.heartapiclientsdk.model.User user = JSONUtil.toBean(userRequestParams, com.naer.heartapiclientsdk.model.User.class);
-//        if(id==2){
-//            WeatherParams weatherParams = JSON.parseObject(userRequestParams,WeatherParams.class);
-//            String cacheRedis = stringRedisTemplate.opsForValue()
-//                    .get(weatherParams.getCity() + weatherParams.getExtensions());
-//            if(cacheRedis != null){
-//                new Thread(() -> {
-//                    String parameters = JSON.toJSONString(weatherParams);
-//                    apiClient.onlineInvoke(parameters, "/api/weather/weatherInfo");
-//                }).start();
-//                return ResultUtils.success(cacheRedis);
-//            }
-//            String result = apiClient.getWeatherInfo(weatherParams);
-//            return ResultUtils.success(result);
-//        }
-//        String usernameByPost = apiClient.onlineInvoke(userRequestParams,url);
-//        return ResultUtils.success(usernameByPost);
-//    }
-//
-//    @GetMapping("/interfaceNameList")
-//    public BaseResponse<Map> interfaceNameList(){
-//        List<InterfaceInfo> list = interfaceInfoService.list();
-//        Map interfaceNameMap=new HashMap();
-//        for (InterfaceInfo interfaceInfo : list) {
-//            String name = interfaceInfo.getName();
-//            interfaceNameMap.put(interfaceInfo.getName(),interfaceInfo.getName());
-//        }
-//        return ResultUtils.success(interfaceNameMap);
-//    }
 }

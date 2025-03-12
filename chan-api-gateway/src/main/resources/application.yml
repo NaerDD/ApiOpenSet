@@ -36,7 +36,7 @@ dubbo:
     name: dubbo
     port: -1
   registry:
-    id: zk-registry
+    id: nacos-registry
     address: nacos://localhost:8848
 #    parameters:
 #      namespace: be38b4f5-9677-40f6-b402-4c800814edae

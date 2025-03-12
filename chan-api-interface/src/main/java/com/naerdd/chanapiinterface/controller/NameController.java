@@ -2,7 +2,6 @@ package com.naerdd.chanapiinterface.controller;
 
 
 import com.naer.chanapiclientsdk.model.User;
-import com.naer.chanapiclientsdk.utils.SignUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 

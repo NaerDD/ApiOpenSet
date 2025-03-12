@@ -121,11 +121,15 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             return handlerNoAuth(response);
         }
         long userId = invokeUser.getId();
-        InterfaceInfo interfaceInfo = null;
-        interfaceInfo = innerInterfaceInfoService.getInterfaceInfo(path, method);
-        Long id = interfaceInfo.getId();
         //4.请求的模拟接口是否存在
         //todo 从数据库中查询模拟接口是否存在 以及请求方法是否匹配 （还可以校验请求参数）
+        InterfaceInfo interfaceInfo = null;
+        try{
+            interfaceInfo = innerInterfaceInfoService.getInterfaceInfo(path, method);
+        }catch (Exception e){
+            log.error("getInterfaceInfo error",e);
+        }
+        Long id = interfaceInfo.getId();
         if(interfaceInfo==null){
             return handlerNoAuth(response);
         }
@@ -171,7 +175,6 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
                             }catch (Exception e){
                                 log.error("invokeCount error",e);
                             }
-
                             // 合并多个流集合，解决返回体分段传输
                             DataBufferFactory dataBufferFactory = new DefaultDataBufferFactory();
                             DataBuffer buff = dataBufferFactory.join(dataBuffers);

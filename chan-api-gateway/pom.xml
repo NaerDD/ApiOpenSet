@@ -23,7 +23,6 @@
             <artifactId>chan-api-common</artifactId>
             <version>0.0.1</version>
         </dependency>
-
         <!--         https://mvnrepository.com/artifact/org.apache.dubbo/dubbo -->
         <dependency>
             <groupId>org.apache.dubbo</groupId>

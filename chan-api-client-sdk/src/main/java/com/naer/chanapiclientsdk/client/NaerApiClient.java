@@ -30,8 +30,6 @@ public class NaerApiClient {
         this.secretKey = secretKey;
     }
 
-
-
     public String getNameByGet(String name){
         //可以单独传入http参数，这样参数会自动做URL编码，拼接在URL中
         HashMap<String,Object> params = new HashMap<>();
@@ -62,6 +60,10 @@ public class NaerApiClient {
         return hashMap;
     }
 
+    //1.前端 填写 参数 chan-api-backend模拟客户端发送请求
+    //2.发送到http://localhost:8090/api/name/user” 交给api网关
+    //3.网络逻辑处理之后 请求转发，调用模拟接口
+    //4.Nacos远程调用 backend去实现 common公共类中定义接口 然后gateway和backend 服务提供者和使用者都引入common gateway就可以直接使用
     public String getUserNameByPost(User user){
         String json = JSONUtil.toJsonStr(user);
         HttpResponse httpResponse =  HttpRequest.post(GATEWAY_HOST+"/api/name/user")
@@ -73,5 +75,7 @@ public class NaerApiClient {
         System.out.println(result);
         return result;
     }
+
+
 
 }
